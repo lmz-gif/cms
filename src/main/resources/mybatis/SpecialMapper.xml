@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.limengze.dao.SpecialMapper">
+	<resultMap type="special" id="specialMap">
+		<id column="id" property="id"/>
+		<collection property="articleList" column="id" select="getArticles"></collection>
+	</resultMap>
+	
+	<select id="getArticles" resultType="article">
+		Select a.title,a.id,created from cms_special_article m,cms_article a where m.aid=a.id and m.sid=#{value} and deleted=0
+	</select>
+	
+</mapper>
