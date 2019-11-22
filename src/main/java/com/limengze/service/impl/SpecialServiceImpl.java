@@ -51,6 +51,26 @@ public class SpecialServiceImpl implements SpecialService {
 	public int delArticleFromSpecial(Integer sid, Integer aid) {
 		return specialMapper.delArticleFromSpecial(sid, aid);
 	}
+
+	/**
+	 * 修改专题
+	 *
+	 */
+	@Override
+	public int updateSpecial(Special special) {
+		return specialMapper.updateSpecial(special);
+	}
+
+	/**
+	 * 删除专题
+	 * 
+	 */
+	@Override
+	public void delSpecial(Integer id) {
+		specialMapper.delSpecialMiddle(id);
+		specialMapper.delSpecial(id);
+		
+	}
 	
 	
 	

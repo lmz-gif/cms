@@ -9,6 +9,9 @@
 <title>${article.title}</title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1">
+	
+<meta name="keywords" content="${article.keywords }" />
+<meta name="description" content="${article.summary }" />
 <link rel="stylesheet"
 	href="/resource/css/bootstrap.min.css">
 <script src="${pageContext.request.contextPath}/resource/js/jquery-3.2.1.js"></script>
@@ -20,8 +23,9 @@
 		<dl>
 		    <dt><a href="javascript:window.close()">关闭窗口</a></dt>
 			<dt>
-				${article.title}<br>
-				${article.tags}
+			<h2>${article.title}</h2><br>
+			标签：${article.tags}<br>
+			来源：${article.original}
 			</dt>
 			<hr>
 			
@@ -37,7 +41,7 @@
 				<hr>
 				评论数量：${article.commentCnt}
 			</dd>
-			<dd><div id="commentList"></div></dd>
+			<dd><div id="mycommentList"></div></dd>
 			
 		</dl>
 	
@@ -47,7 +51,7 @@
 
 	// 获取评论列表
 	$(function(){
-		$("#commentList").load("/comment/getComList?articleId=${article.id}");
+		$("#mycommentList").load("/comment/getComList?articleId=${article.id}");
 	});
 	
 	

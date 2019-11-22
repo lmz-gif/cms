@@ -3,7 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-
+<script type="text/javascript" src="/resource/js/cms.js"></script>
+</script>
   
 	<!-- 所有分类下的文章 -->
 	<ul class="list-unstyled">
@@ -16,7 +17,7 @@
 					<h5 class="mt-0 mb-1"><small><a href="javascript:myopen(${a.id })"> ${a.title }</a></small></h5>
 					<br>
 					<br>
-					<h5 class="mt-0 mb-1"><small> <%-- ${a.username } --%> &nbsp;  <fmt:formatDate value="${a.created }" pattern="yyyy-MM-dd"/> </small></h5>
+					<h5 class="mt-0 mb-1" align="right"><small> <b>作者:</b>${a.user.username } &nbsp;  <b>发布时间:</b><fmt:formatDate value="${a.created }" pattern="yyyy-MM-dd"/> </small></h5>
 					
 				</div>
 				
@@ -25,12 +26,11 @@
 				<hr>
 		</c:forEach>
 		<div>
-			${pageStr}
 			<a href="index?chnId=${chnId}&catId=${catId}&pageNum=1">首页</a>&nbsp;
-			<a href="index?chnId=${chnId}&catId=${catId}&pageNum=${articles.prePage == 0 ? 1 : articles.prePage}">上一页</a>
-			&emsp;${articles.lastPage == 0 ? 0 : articles.pageNum}/${articles.lastPage}&emsp;
-			<a href="index?chnId=${chnId}&catId=${catId}&pageNum=${articles.nextPage == 0 ? articles.lastPage : articles.nextPage}">下一页</a>&nbsp;
-			<a href="index?chnId=${chnId}&catId=${catId}&pageNum=${articles.lastPage}">尾页</a>
+			<a href="index?chnId=${chnId}&catId=${catId}&pageNum=${articles.pageNum-1}">上一页</a>
+			&emsp;${articles.pageNum}/${articles.pages}&emsp;
+			<a href="index?chnId=${chnId}&catId=${catId}&pageNum=${articles.pageNum+1}">下一页</a>&nbsp;
+			<a href="index?chnId=${chnId}&catId=${catId}&pageNum=${articles.pages}">尾页</a>
 		</div>
 	</ul> 
 

@@ -3,11 +3,15 @@ package com.limengze.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.limengze.dao.AdminMapper;
+import com.limengze.dao.ArticleMapper;
+import com.limengze.entity.Article;
 import com.limengze.entity.User;
 import com.limengze.service.AdminService;
 
@@ -22,6 +26,7 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
 	AdminMapper am;
+	
 	
 	// 获取用户列表
 	@Override

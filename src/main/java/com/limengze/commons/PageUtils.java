@@ -1,4 +1,4 @@
-package com.limengze.comons;
+package com.limengze.commons;
 
 import java.util.List;
 

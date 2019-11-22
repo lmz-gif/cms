@@ -51,7 +51,7 @@
 	<!-- 获取文章内容 -->
 	<select id="getDetail" resultMap="articleMap">
 		SELECT id,title,picture,content,channel_id,category_id,user_id,
-		        hits,hot,status,created,updated,commentCnt,articleType
+		        hits,hot,status,created,updated,commentCnt,articleType,keywords,original
 		FROM cms_article
 		WHERE id = #{value}
 		AND deleted = 0

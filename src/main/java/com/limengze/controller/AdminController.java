@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageInfo;
-import com.limengze.comons.PageUtils;
-import com.limengze.comons.ResultMsg;
-import com.limengze.comons.UserConst;
+import com.limengze.commons.PageUtils;
+import com.limengze.commons.ResultMsg;
+import com.limengze.commons.UserConst;
 import com.limengze.entity.Article;
 import com.limengze.entity.User;
 import com.limengze.service.AdminService;

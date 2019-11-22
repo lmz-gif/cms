@@ -45,9 +45,11 @@ public interface UserService {
 	 * 用户查询文章列表
 	 * @param pageNum   页码
 	 * @param userId    用户ID
+	 * @param categoryId 
+	 * @param titles 
 	 * @return
 	 */
-	public PageInfo<Article> myArticles(Integer pageNum, Integer userId);
+	public PageInfo<Article> myArticles(Integer pageNum, Integer userId, String titles, Integer categoryId);
 
 	/**
 	 * 	用户删除文章(逻辑删除)
@@ -62,6 +64,9 @@ public interface UserService {
 	 * @return
 	 */
 	public int updateArt(Article article);
+
+
+	public int delMore(String ids);
 
 }
 

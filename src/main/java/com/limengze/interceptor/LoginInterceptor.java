@@ -6,7 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import com.limengze.comons.UserConst;
+import com.limengze.commons.UserConst;
 import com.limengze.entity.User;
 
 /**

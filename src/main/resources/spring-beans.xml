@@ -40,7 +40,7 @@
 
 	<!--4、 配置mybatis SqlSessionFactory -->
 	<bean id="sqlSessionFactory"
-		class="org.mybatis.spring.SqlSessionFactoryBean" scope="singleton" autowire="default">
+		class="org.mybatis.spring.SqlSessionFactoryBean" scope="singleton" autowire="default" >
 		<!-- 注入数据源 -->
 		<property name="dataSource" ref="dataSource"></property>
 		<!-- 关联mybatis配置文件 -->
@@ -73,6 +73,7 @@
 			<tx:method name="*" propagation="REQUIRED" />
 		</tx:attributes>
 	</tx:advice>
+	
 	<!-- 7、配置aop -->
 	<aop:config>
 		<!-- 配置切点表达式 -->
@@ -92,5 +93,10 @@
 		<property name="basePackage" value="com.limengze.dao"></property>
 
 	</bean>
+	
+	<!-- xml文件引入 -->
+	<import resource="spring-redis.xml"/>
+	<import resource="elasticsearch.xml"/>
+	<import resource="spring-kafka-*.xml"/>
 
 </beans>

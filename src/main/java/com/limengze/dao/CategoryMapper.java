@@ -21,6 +21,13 @@ public interface CategoryMapper {
 	 */
 	@Select("select id,name,channel_id channelId from cms_category where channel_id = #{value}")
 	List<Category> getListByChnlId(Integer id);
+	
+	/**
+	 * 获取全部分类
+	 * @return
+	 */
+	@Select("select id,name from cms_category")
+	List<Category> getList();
 
 }
 

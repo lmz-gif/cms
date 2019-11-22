@@ -1,5 +1,8 @@
 package com.limengze.controller;
 
+import java.util.Iterator;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageInfo;
-import com.limengze.comons.PageUtils;
-import com.limengze.comons.ResultMsg;
-import com.limengze.comons.UserConst;
+import com.limengze.commons.PageUtils;
+import com.limengze.commons.ResultMsg;
+import com.limengze.commons.UserConst;
 import com.limengze.entity.Comment;
 import com.limengze.entity.User;
 import com.limengze.service.CommentService;
@@ -28,7 +31,7 @@ import com.limengze.service.CommentService;
 public class CommentController {
 	
 	@Autowired
-	CommentService cs;
+	CommentService commentService;
 
 	
 	/**
@@ -40,7 +43,11 @@ public class CommentController {
 	public String getComList(Model model, Integer articleId,
 			@RequestParam(defaultValue="1") Integer pageNum) {
 		
-		PageInfo<Comment> commenPage = cs.getComList(articleId, pageNum);
+		PageInfo<Comment> commenPage = commentService.getComList(articleId, pageNum);
+		List<Comment> list = commenPage.getList();
+		for (Comment comment : list) {
+			System.out.println(comment);
+		}
 		String pageStr = PageUtils.pageLoad(commenPage.getPageNum(), commenPage.getPages(), "/comment/getComList?articleId="+articleId, 10);
 		
 		model.addAttribute("commenPage", commenPage);
@@ -65,7 +72,7 @@ public class CommentController {
 			return new ResultMsg(-1, "您尚未登录,不能评论", null);
 		}
 		
-		int res = cs.addComment(content, articleId, loginUser.getId());
+		int res = commentService.addComment(content, articleId, loginUser.getId());
 		
 		if (res > 0) {
 			return new ResultMsg(1, "发表成功!", null);
@@ -90,7 +97,7 @@ public class CommentController {
 			return new ResultMsg(0, "您尚未登录,不能删除评论", null);
 		}
 		
-		int res = cs.delComment(comId);
+		int res = commentService.delComment(comId);
 		if (res > 0) {
 			return new ResultMsg(1, "删除成功!", null);
 		} else {

@@ -13,6 +13,9 @@
 <script type="text/javascript" src="/resource/js/cms.js"></script>
 <script type="text/javascript">
 
+function modify(id){
+	$("#content-wrapper").load("/special/updateSpecial?id="+id)
+}
 
 function add(){
 	$("#content-wrapper").load("/special/addSpecial")
@@ -21,6 +24,9 @@ function add(){
 
 function addArticleToSpecial(id){
 	$("#content-wrapper").load("/special/addArticleToSpecial?id="+id)
+}
+function delSpecial(id){
+	$("#content-wrapper").load("/special/delSpecial?id="+id)
 }
 
 </script>
@@ -47,6 +53,7 @@ function addArticleToSpecial(id){
 					<td>
 						<button type="button" class="btn btn-info" onclick="addArticleToSpecial(${special.id})">追加文章</button> 
 					    <button type="button" class="btn btn-info" onclick="modify(${special.id})">修改专题</button> 
+					    <button type="button" class="btn btn-info" onclick="delSpecial(${special.id})">删除专题</button> 
 					
 					</td>
 				</tr>

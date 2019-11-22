@@ -22,5 +22,9 @@ public interface SpecialService {
 
 	public int delArticleFromSpecial(Integer sid, Integer aid);
 
+	public int updateSpecial(Special special);
+
+	public void delSpecial(Integer id);
+
 }
 

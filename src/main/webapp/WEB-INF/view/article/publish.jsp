@@ -68,6 +68,14 @@ String htmlData = request.getParameter("content1") != null ? request.getParamete
 			<label for="title">文章标签</label> <input type="text"
 				class="form-control" id="tags" name="tags" placeholder="请输入标签">
 		</div>
+		<div class="form-group row ">
+			<label for="title">文章关键字</label> <input type="text"
+				class="form-control" name="keywords" placeholder="请输入文章关键字">
+		</div>
+		<div class="form-group row ">
+			<label for="title">文章来源</label> <input type="text"
+				class="form-control" name="original" placeholder="请输入文章来源">
+		</div>
 		
 		<div class="form-group row" >
 		<button type="button" class="btn btn-success" onclick="publish()">发布</button>

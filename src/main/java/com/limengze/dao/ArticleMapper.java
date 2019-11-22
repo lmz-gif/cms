@@ -67,7 +67,7 @@ public interface ArticleMapper {
 	void delArtTags(Integer id);
 	
 	//查询全部文章
-	@Select("Select id,title from cms_article where deleted = 0")
+	@Select("Select id,title,created from cms_article where deleted = 0")
 	List<Article> getArticles();
 	
 	

@@ -1,5 +1,6 @@
 package com.limengze.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -8,8 +9,12 @@ import java.util.Date;
  * 用户
  */
 
-public class User {
+public class User implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5531615961016798964L;
 	private Integer id;
 	private String username;
 	private String password;
@@ -202,11 +207,6 @@ public class User {
 		this.role = role;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", nickname=" + nickname
@@ -255,5 +255,6 @@ public class User {
 			return false;
 		return true;
 	}
-
+	
+	
 }

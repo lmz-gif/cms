@@ -68,6 +68,14 @@
 			<label for="title">文章标签</label> <input type="text"
 				class="form-control" id="tags" value="${article.tags}" name="tags" placeholder="请输入标题">
 		</div>
+		<div class="form-group row ">
+			<label for="title">文章关键字</label> <input type="text"
+				class="form-control" name="keywords" placeholder="请输入文章关键字" value="${article.keywords}">
+		</div>
+		<div class="form-group row ">
+			<label for="title">文章来源</label> <input type="text"
+				class="form-control" name="original" placeholder="请输入文章来源" value="${article.original}">
+		</div>
 		
 		<div class="form-group row" >
 		<button type="button" class="btn btn-success" onclick="publish()">修改</button>

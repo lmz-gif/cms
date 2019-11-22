@@ -142,4 +142,12 @@ public class Special implements Serializable {
 		return true;
 	}
 
+
+
+	@Override
+	public String toString() {
+		return "Special [id=" + id + ", title=" + title + ", digest=" + digest + ", created=" + created
+				+ ", articleNum=" + articleNum + ", articleList=" + articleList + "]";
+	}
+	
 }

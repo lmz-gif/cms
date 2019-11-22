@@ -2,33 +2,36 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<script type="text/javascript"
+	src="../../../resource/js/jquery-3.2.1.js">
+<!--
 
+//-->
+</script>
 <style>
-.mlink{
-    display: block;
-     .5rem 1rem;
-     padding-top: 0.5rem;
-    padding-right: 1rem;
-    padding-bottom: 0.5rem;
-    padding-left: 1rem
-
+.mlink {
+	display: block; .5 rem 1rem;
+	padding-top: 0.5rem;
+	padding-right: 1rem;
+	padding-bottom: 0.5rem;
+	padding-left: 1rem
 }
 </style>
 
 
 <div id="channel_article">
-<ul class="nav">
+	<ul class="nav">
 
-	<!--栏目下所有 分类 -->
-	<li class="nav-item  list-group-item-success"><a class="nav-link"
-		href="/index?chnId=${chnId}">全部</a></li>
-	<c:forEach items="${categories}" var="catygory">
+		<!--栏目下所有 分类 -->
+		<li class="nav-item" style="hight: 50px" id="0"><a
+			class="nav-link" href="/index?chnId=${chnId}">全部</a></li>
+		<c:forEach items="${categories}" var="catygory">
 
-		<li class="nav-item "><a class="nav-link"
-			href="/index?chnId=${chnId}&catId=${catygory.id}">${catygory.name }</a></li>
-	</c:forEach>
+			<li class="nav-item" id="${catygory.id}"><a class="nav-link"
+				href="/index?chnId=${chnId}&catId=${catygory.id}">${catygory.name }</a></li>
+		</c:forEach>
 
-<%-- 	<!-- 所有栏目下的文章 -->
+		<%-- 	<!-- 所有栏目下的文章 -->
 	<div id="content-wrapper">
 
 		 <ul class="list-unstyled">
@@ -53,7 +56,7 @@
 			<li> ${page}</li>
 		</ul>
 		--%>
-</ul> 
+	</ul>
 </div>
 
 
@@ -89,5 +92,8 @@
 		//在新窗口打开文章的详情J
 		window.open("/article/getDetail?aId=" + id, "_blank")
 	}
-
-</script> 
+	$(function(){
+		$("#"+${catId}).attr("class","nav-item  list-group-item-success")
+		
+	})
+</script>

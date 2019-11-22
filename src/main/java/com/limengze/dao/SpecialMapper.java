@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.limengze.entity.Special;
 
@@ -39,6 +40,18 @@ public interface SpecialMapper {
 	// 删除中间表数据
 	@Delete("DELETE FROM cms_special_article WHERE sid = #{sid} AND aid = #{aid}")
 	public int delArticleFromSpecial(@Param("sid")Integer sid, @Param("aid")Integer aid);
+	
+	//修改专题
+	@Update("update cms_special set title=#{title},digest=#{digest} where id=#{id}")
+	public int updateSpecial(Special special);
+	
+	// 删除中间表数据
+	@Delete("DELETE FROM cms_special_article WHERE sid = #{id}")
+	public void delSpecialMiddle(@Param("id")Integer id);
+	
+	// 删除中间表数据
+	@Delete("DELETE FROM cms_special WHERE id = #{id}")
+	public void delSpecial(@Param("id")Integer id);
 
 
 }

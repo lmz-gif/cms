@@ -21,27 +21,27 @@ import com.limengze.service.CommentService;
 public class CommentServiceImpl implements CommentService {
 	
 	@Autowired
-	CommentMapper cm;
+	CommentMapper commentMapper;
 	
 	// 获取评论列表(文章ID)
 	@Override
 	public PageInfo<Comment> getComList(Integer articleId, Integer pageNum) {
 		PageHelper.startPage(pageNum, 10);
-		List<Comment> comments = cm.getComList(articleId);
+		List<Comment> comments = commentMapper.getComList(articleId);
 		return new PageInfo<Comment>(comments);
 	}
 	
 	// 发表评论
 	@Override
 	public int addComment(String content, Integer articleId, Integer userId) {
-		int res = cm.addComment(content, articleId, userId);
+		int res = commentMapper.addComment(content, articleId, userId);
 		return res;
 	}
 	
 	// 删除评论
 	@Override
 	public int delComment(Integer comId) {
-		int res = cm.delComment(comId);
+		int res = commentMapper.delComment(comId);
 		return res;
 	}
 	

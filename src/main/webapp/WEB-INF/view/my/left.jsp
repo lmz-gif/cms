@@ -14,6 +14,7 @@
 			<li class="list-group-item  text-center"><a class="channel"
 				href="javascript:void(0)" data="/user/toPublish"
 				class="list-group-item">发布文章</a></li>
+				
 			
 			<li class="list-group-item  text-center"><a class="channel"
 				href="javascript:void(0)" data="/user/toPublistImgs"

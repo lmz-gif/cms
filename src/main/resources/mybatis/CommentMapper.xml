@@ -6,6 +6,7 @@
 <mapper namespace="com.limengze.dao.CommentMapper">
 	
 	<resultMap type="comment" id="commentMap">
+		<result column="userId" property="userId"/>
 		<association property="user" column="userId"
 			select="com.limengze.dao.UserMapper.findUserById" />
 	</resultMap>

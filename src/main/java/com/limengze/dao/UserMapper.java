@@ -3,6 +3,7 @@ package com.limengze.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -27,11 +28,14 @@ public interface UserMapper {
 	@Select("select id,username,password,role,locked from cms_user where username = #{value}")
 	User findByName(String username);
 	
+	// 通过用户id查找
+	User findUserById(Insert id);
+	
 	// 用户发布文章
 	int publish(Article article);
 
 	// 用户查询文章列表
-	List<Article> myArticles(Integer userId);
+	List<Article> myArticles(@Param("userId")Integer userId,@Param("titles") String titles,@Param("categoryId") Integer categoryId);
 	
 	// 用户删除文章(逻辑删除)
 	@Update("UPDATE cms_article SET deleted = 1 WHERE id = #{value}")

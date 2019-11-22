@@ -4,40 +4,86 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.elasticsearch.annotations.Document;
+
 /**
  * @author lmz
  * @Date 2019年10月17日
  *  定义文章类
  */
-
+@Document(indexName="test",type="article")
 public class Article implements Serializable {
 
 	private static final long serialVersionUID = 8885558194798598334L;
 
 	private Integer id;
+	//
 	private String title;
+	//
 	private String content;
+	//
 	private String picture;
 	
+	//
 	private Integer channelId;
-	private Channel channel;            // 多对一查询频道
-	
 	private Integer categoryId;
-	private Category category;          // 多对一查询分类
+	
+	//
+	private Channel channel;            
+	private Category category;          
 	
 	private Integer userId;
-	private User user;                  // 多对一查询用户
-	
-	private String tags;                // 文章标签
-	
+	// 多对一查询用户
+	private User user;                  
+	// 文章标签
+	private String tags;                
+	//点击量
 	private Integer hits;
+	//热度
 	private Integer hot;
+	//状态--是否禁用
 	private Integer status;
+	//是否已被逻辑删除
 	private Integer deleted;
+	//创建时间
 	private Date created;
+	//修改时间
 	private Date updated;
+	//评论量
 	private Integer commentCnt;
+	//关键字
+	private String keywords;
+	//来源
+	private String original;
+	//摘要
+	private String summary=null;
 	
+	
+	
+	public String getKeywords() {
+		return keywords;
+	}
+	
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
+	}
+
+	public String getOriginal() {
+		return original;
+	}
+
+	public void setOriginal(String original) {
+		this.original = original;
+	}
+
+	public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+
 	private ArticleType articleType = ArticleType.TEXT;  // 文章类型类,默认值为TEXT
 	
 	private List<ImageBean> imgList;                     // 接收上传多个图片的集合

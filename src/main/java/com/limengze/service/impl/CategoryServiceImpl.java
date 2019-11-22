@@ -19,13 +19,19 @@ import com.limengze.service.CategoryService;
 public class CategoryServiceImpl implements CategoryService {
 	
 	@Autowired
-	CategoryMapper cm;
+	CategoryMapper categoryMapper;
 	
 	// 获取分类
 	@Override
 	public List<Category> getListByChnlId(Integer chnId) {
-		List<Category> categories = cm.getListByChnlId(chnId);
+		List<Category> categories = categoryMapper.getListByChnlId(chnId);
 		return categories;
+	}
+
+	@Override
+	public List<Category> getList() {
+
+		return categoryMapper.getList();
 	}
 
 }

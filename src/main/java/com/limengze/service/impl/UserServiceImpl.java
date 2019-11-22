@@ -25,29 +25,29 @@ import com.lmz.utils.Md5Util;
 public class UserServiceImpl implements UserService {
 	
 	@Autowired
-	UserMapper um;
+	UserMapper userMapper;
 
 	@Autowired
-	ArticleMapper am;
+	ArticleMapper articleMapper;
 	
 	// 注册
 	@Override
 	public int register(User user) {
 		user.setPassword(Md5Util.dataEncryption(user.getPassword(),user.getUsername()));      // 加密密码
-		return um.register(user);
+		return userMapper.register(user);
 	}
 	
 	// 验证用户唯一性
 	@Override
 	public boolean checkExist(String username) {
-		return null != um.findByName(username);
+		return null != userMapper.findByName(username);
 	}
 	
 	// 登录
 	@Override
 	public User login(User user) {
 		String pwd = Md5Util.dataEncryption(user.getPassword(),user.getUsername());      // 解析密码
-		User login = um.findByName(user.getUsername());     // 通过用户名获取用户
+		User login = userMapper.findByName(user.getUsername());     // 通过用户名获取用户
 		
 		if (login != null && pwd.equals(login.getPassword())) {    // 判断用户名与密码是否为一个用户
 			return login;
@@ -69,14 +69,14 @@ public class UserServiceImpl implements UserService {
 		
 		for (String tags : split) {
 			tag = tags.trim();                             // 去除空格
-			Tag resTag = am.getTag(tag);                   // 获取标签对象
+			Tag resTag = articleMapper.getTag(tag);        // 获取标签对象
 			if (resTag == null) {                          // 判断是否为空
 				resTag = new Tag(tag);                     // 为空则生成新的标签
-				am.addTag(resTag);                         // 创建新标签
+				articleMapper.addTag(resTag);              // 创建新标签
 			}
-			
+			//插入中间表
 			try {
-				am.addArtsTag(article.getId(), resTag.getId());
+				articleMapper.addArtsTag(article.getId(), resTag.getId());
 			} catch (Exception e) {
 				System.out.println("主键重复异常(插入失败)");
 			}
@@ -89,8 +89,8 @@ public class UserServiceImpl implements UserService {
 	// 发布文章
 	@Override
 	public int publish(Article article) {
-		int res = um.publish(article);
-		
+		//并返回主键进入article对象
+		int res = userMapper.publish(article);
 		prossesTags(article);               // 调用处理标签方法
 		
 		return res;
@@ -99,27 +99,37 @@ public class UserServiceImpl implements UserService {
 	
 	// 查询文章列表
 	@Override
-	public PageInfo<Article> myArticles(Integer pageNum, Integer userId) {
-		PageHelper.startPage(pageNum, 8);
-		List<Article> artList = um.myArticles(userId);
+	public PageInfo<Article> myArticles(Integer pageNum, Integer userId, String titles, Integer categoryId) {
+		PageHelper.startPage(pageNum, 5);
+		List<Article> artList = userMapper.myArticles(userId,titles,categoryId);
 		return new PageInfo<>(artList);
 	}
 
 	// 逻辑删除文章
 	@Override
 	public int delArticle(Integer id) {
-		int res = um.delArticle(id);
-		am.delArtTags(id);                         // 删除中间表的数据 
+		int res = userMapper.delArticle(id);
+		articleMapper.delArtTags(id);                         // 删除中间表的数据 
 		return res;
 	}
 	
 	// 用户修改文章
 	@Override
 	public int updateArt(Article article) {
-		int res = um.updateArt(article);
-		am.delArtTags(article.getId());            // 删除中间表中的数据
+		int res = userMapper.updateArt(article);
+		articleMapper.delArtTags(article.getId());            // 删除中间表中的数据
 		prossesTags(article);
 		return res;
+	}
+
+	@Override
+	public int delMore(String ids) {
+		String[] split = ids.split(",");
+		for (String string : split) {
+			userMapper.delArticle(Integer.parseInt(string));
+			articleMapper.delArtTags(Integer.parseInt(string));
+		}
+		return 1;
 	}
 
 }

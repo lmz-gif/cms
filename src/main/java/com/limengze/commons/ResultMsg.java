@@ -1,4 +1,4 @@
-package com.limengze.comons;
+package com.limengze.commons;
 
 import java.io.Serializable;
 
@@ -8,6 +8,7 @@ import java.io.Serializable;
  */
 
 public class ResultMsg implements Serializable {
+	
 
 	private static final long serialVersionUID = 347281007166872483L;
 	

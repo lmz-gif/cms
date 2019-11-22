@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,12 +27,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
-import com.limengze.comons.UserConst;
+import com.limengze.commons.UserConst;
+import com.limengze.dao.CategoryMapper;
 import com.limengze.entity.Article;
 import com.limengze.entity.ArticleType;
+import com.limengze.entity.Category;
 import com.limengze.entity.ImageBean;
 import com.limengze.entity.User;
 import com.limengze.service.ArticleService;
+import com.limengze.service.CategoryService;
 import com.limengze.service.UserService;
 
 /**
@@ -44,10 +49,16 @@ import com.limengze.service.UserService;
 public class UserController {
 	
 	@Autowired
-	UserService us;
+	RedisTemplate<String, Category> redis;
+	
+	@Autowired
+	UserService userService;
 
 	@Autowired
 	ArticleService as;
+	
+	@Autowired
+	CategoryService categoryService;
 	
 	
 	// 跳转到注册页面
@@ -66,7 +77,7 @@ public class UserController {
 	@RequestMapping("checkExist")
 	@ResponseBody
 	public boolean checkExist(String username) { 
-		boolean res = us.checkExist(username);
+		boolean res = userService.checkExist(username);
 		return !res;
 	}
 	
@@ -84,7 +95,7 @@ public class UserController {
 			return "user/register";
 		}
 		
-		int res = us.register(user);     // 获取注册结果
+		int res = userService.register(user);     // 获取注册结果
 		if (res > 0) {
 			return "redirect:login";
 		} else {
@@ -107,7 +118,7 @@ public class UserController {
 			return "login";
 		}
 		
-		User login = us.login(user);         // 调用登录判断
+		User login = userService.login(user);         // 调用登录判断
 		if (login == null) {
 			request.setAttribute("error", "用户名或密码错误!");
 			return "user/login";
@@ -156,11 +167,20 @@ public class UserController {
 	//用户文章列表
 	@RequestMapping("myArticles")
 	public String myArticles(HttpServletRequest request, 
-			@RequestParam(defaultValue="1")Integer pageNum) {
+			@RequestParam(defaultValue="1")Integer pageNum ,@RequestParam(defaultValue="")String titles,@RequestParam(defaultValue="0")Integer categoryId) {
 		
 		User loginUser = (User) request.getSession().getAttribute(UserConst.SESSION_USER_KEY);  // 获取登录用户的信息
-		PageInfo<Article> articles = us.myArticles(pageNum, loginUser.getId());
+		PageInfo<Article> articles = userService.myArticles(pageNum, loginUser.getId(),titles, categoryId);
+		ListOperations<String, Category> opsForList = redis.opsForList();
+		List<Category> categories=null;
+		if (redis.hasKey("category")) {
+			categories = opsForList.range("category", 0, -1);
+		}else {
+			categories = categoryService.getList();
+			opsForList.leftPushAll("category", categories);
+		}
 		request.setAttribute("articles", articles);
+		request.setAttribute("categories", categories);
 		
 		return "/my/list";
 	}
@@ -198,7 +218,7 @@ public class UserController {
 		User loginUser = (User) session.getAttribute(UserConst.SESSION_USER_KEY);   // 获取登录的用户信息
 		article.setUserId(loginUser.getId());       // 将登录用户信息存入传递类
 		
-		int res = us.publish(article);
+		int res = userService.publish(article);
 		
 		return res > 0;
 	}
@@ -242,7 +262,7 @@ public class UserController {
 		User loginUser = (User) request.getSession().getAttribute(UserConst.SESSION_USER_KEY);   // 获取登录的用户信息
 		article.setUserId(loginUser.getId());       // 将登录用户信息存入传递类
 		
-		int res = us.publish(article);              // 进行发布
+		int res = userService.publish(article);              // 进行发布
 		
 		return res > 0;
 	}
@@ -256,7 +276,20 @@ public class UserController {
 	@RequestMapping("delArticle")
 	@ResponseBody
 	public boolean delArticle(Integer id) {
-		int res = us.delArticle(id);
+		int res = userService.delArticle(id);
+		return res > 0;
+	}
+	
+	/**
+	 * 	用户批量删除文章(逻辑删除)
+	 * @param id         文章ID
+	 * @return
+	 */
+	@RequestMapping("delMore")
+	@ResponseBody
+	public boolean delMore(String ids) {
+		ids = ids.substring(1);
+		int res = userService.delMore(ids);
 		return res > 0;
 	}
 	
@@ -279,7 +312,7 @@ public class UserController {
 		User loginUser = (User) session.getAttribute(UserConst.SESSION_USER_KEY);   // 获取登录的用户信息
 		article.setUserId(loginUser.getId());       // 将登录用户信息存入传递类
 		
-		int res = us.updateArt(article);
+		int res = userService.updateArt(article);
 		
 		return res > 0;
 	}

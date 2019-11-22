@@ -21,7 +21,7 @@ String htmlData = request.getParameter("content1") != null ? request.getParamete
 
 		<div class="form-group row ">
 			<textarea name="content" cols="400" rows="5"
-				style="width: 600px; height: 250px; "></textarea>
+				style="width: 600px; height: 250px;" placeholder="请以A:"></textarea>
 			<br />
 		</div>
 		

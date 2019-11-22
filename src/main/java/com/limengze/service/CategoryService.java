@@ -15,5 +15,7 @@ public interface CategoryService {
 	// 根据频道ID获取分类
 	List<Category> getListByChnlId(Integer chnId);
 
+	List<Category> getList();
+
 }
 

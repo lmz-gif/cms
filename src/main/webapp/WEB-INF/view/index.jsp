@@ -53,13 +53,13 @@
 						</ol>
 						<div class="carousel-inner">
 							<div class="carousel-item active">
-								<img class="d-block w-100" src="/img/1.jpg" alt="First slide">
+								<img class="d-block w-100" style="height: 200px" src="/img/1.jpg" alt="First slide">
 							</div>
 							<div class="carousel-item">
-								<img class="d-block w-100" src="/img/2.jpg" alt="Second slide">
+								<img class="d-block w-100" style="height: 200px" src="/img/2.jpg" alt="Second slide">
 							</div>
 							<div class="carousel-item">
-								<img class="d-block w-100" src="/img/3.jpg" alt="Third slide">
+								<img class="d-block w-100" style="height: 200px" src="/img/3.jpg" alt="Third slide">
 							</div>
 						</div>
 						<a class="carousel-control-prev" href="#carousel" role="button"
@@ -72,7 +72,7 @@
 					</div>
 				</c:if>
 				<br />
-				<div id="hot">
+				<%-- <div id="hot">
 					<!-- 新闻热点 -->
 					<c:forEach items="${pageInfo.list}" var="c">
 						<div class="media">
@@ -83,7 +83,7 @@
 									<a href="javascript:toDetail(${c.id })">${c.title }</a>
 								</h5>
 								<p class="blog_item_footer">
-									<span class="glyphicon glyphicon-user" title="作者"></span>作者：${c.username}&nbsp;&nbsp;
+									<span class="glyphicon glyphicon-user" title="作者">作者：${c.user.username}</span>&nbsp;&nbsp;
 									&nbsp; <span class="glyphicon glyphicon-time" title="发布时间"></span>发布：&nbsp;
 									<fmt:formatDate value="${c.created }" pattern="yyyy-MM-dd"/>&nbsp;&nbsp;&nbsp;&nbsp;
 								</p>
@@ -92,7 +92,7 @@
                       <br/>
 					</c:forEach>
 					<div>${pageStr}</div>
-				</div>
+				</div> --%>
 				
 				<!-- 分类 -->
 				<div id="category">
@@ -133,7 +133,7 @@
 				   <div class="card-body">
 						<c:forEach items="${specials}" var="s">
 							<ol>
-								<li><h6>${s.title }</h6></li>
+								<li style="list-style: none;background: #d1d5d7"><h6>${s.title }</h6></li>
 								<c:forEach items="${s.articleList }" var="article">
 								<li class="text-truncate" style="font-size: 10px;"><a href="/article/getDetail?aId=${article.id}" target="_blank">${article.title}</a></li>
 								</c:forEach>
